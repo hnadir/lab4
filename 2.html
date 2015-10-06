@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<head>
+<style>
+
+#horizontal-scroll {
+position: relative;
+width: auto;
+height: 460px;
+background: url(backg.jpg) repeat-y;
+-webkit-animation: backgroundScroll 8s linear infinite;
+animation: backgroundScroll 8s linear infinite;
+}
+
+#crow{
+position: absolute;
+top: 250px;
+left: -150px;
+}
+
+.flyleft1{
+	animation-name: enemy1;
+	animation-duration: 6s;
+	animation-timing-function: linear;
+	animation-delay: 1s;
+	animation-iteration-count: infinite;
+	
+	-webkit-animation-name: enemy1;
+	-webkit-animation-duration: 6s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-delay: 1s;
+	-webkit-animation-iteration-count: infinite;
+}
+
+.flyleft2{
+	animation-name: enemy2;
+	animation-duration: 6s;
+	animation-timing-function: linear;
+	animation-delay: 10s;
+	animation-iteration-count: infinite;
+	
+	-webkit-animation-name: enemy2;
+	-webkit-animation-duration: 6s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-delay: 10s;
+	-webkit-animation-iteration-count: infinite;
+}
+
+.randomfly{
+	animation-name: enemy3;
+	animation-duration: 10s;
+	animation-timing-function: linear;
+	animation-delay: 1s;
+	animation-iteration-count: infinite;
+	
+	-webkit-animation-name: enemy3;
+	-webkit-animation-duration: 10s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-delay: 1s;
+	-webkit-animation-iteration-count: infinite;
+}
+
+#plane{
+position: relative;
+top: 200px;
+left: 400px;
+width: 140px;
+height: 90px;
+display: block;
+}
+
+#boom{
+position: relative;
+top: 200px;
+left: 400px;
+width: 140px;
+height: 90px;
+display: none;
+}
+
+#black_cloud_1{
+position: absolute;
+top: 320px;
+left: -200px;
+}
+
+#black_cloud_2{
+position: absolute;
+top: 30px;
+left: -200px;
+}
+
+@-webkit-keyframes enemy1{
+from {left: 2000px;}
+to {left: -20%;}
+}
+ 
+@keyframes enemy1{
+from {left: 2000px}
+to {left: -20%;}
+}
+
+@-webkit-keyframes enemy2{
+from {left: 2000px;}
+to {left: -20%;}
+}
+ 
+@keyframes enemy2{
+from {left: 2000px}
+to {left: -20%;}
+}
+
+@-webkit-keyframes enemy3{
+0% {left:100%;}
+20%{left:80%; top:20%}
+40%{left:50%; top:50%}
+60%{left:30%; top:80%}
+80%{left:15%; top:60%}
+100%{left:0%; top:75%}
+}
+ 
+@keyframes enemy3{
+0% {left:100%;}
+20%{left:80%; top:20%}
+40%{left:50%; top:50%}
+60%{left:30%; top:80%}
+80%{left:15%; top:60%}
+100%{left:0%; top:75%}
+}
+ 
+@-webkit-keyframes backgroundScroll {
+from {background-position: 0 0;}
+to {background-position: -1638px 0;}
+}
+ 
+@keyframes backgroundScroll {
+from {background-position: 0 0;}
+to {background-position: -1638px 0;}
+}
+</style>
+<audio autoplay loop>
+      <source src="delilah.ogg">
+      <source src="delilah.mp3">
+  </audio
+
+</head>
+
+<body>
+<div id="horizontal-scroll">
+ <div id="plane"><img src="plane.png" width="auto" height="100px"></div>
+ <div id="boom"><img src="boom.png" width="auto" height="150px"></div>
+ <div id="black_cloud_1" class="flyleft1"><img src="black_cloud.png" width="150px" height="auto"></div>
+ <div id="black_cloud_2" class="flyleft2"><img src="black_cloud.png" width="150px" height="auto"></div>
+ <div id="crow" class="randomfly"><img src="crow.gif" width="50px" height="auto"></div>
+</div>
+
+<div align="center">
+<img src="up.png" onclick=move('up')>
+<img src="down.png" onclick=move('down')> 
+</div>
+
+<script>
+function move(str){
+var step=80;
+switch(str){
+case "down":
+var x=document.getElementById('plane').offsetTop;
+if(x<300)
+	x= x + step;
+document.getElementById('plane').style.top= x + "px";
+break;
+
+case "up":
+var x=document.getElementById('plane').offsetTop;
+if(x>100)
+	x= x -step;
+document.getElementById('plane').style.top= x + "px";
+break;
+}
+}
+
+function wrapperFunction(){
+	var x = window.setInterval(collision_detection, 100);
+}
+
+function collision_detection(){
+var plane_left = document.getElementById('plane').offsetLeft;
+var plane_top = document.getElementById('plane').offsetTop;
+var plane_height = document.getElementById('plane').offsetHeight;
+var plane_width = document.getElementById('plane').offsetWidth;
+var plane_x = plane_left + plane_width;
+var plane_y = plane_top + plane_height;
+
+var cloud1_left = document.getElementById('black_cloud_1').offsetLeft;
+var cloud1_top = document.getElementById('black_cloud_1').offsetTop;
+var cloud1_height = document.getElementById('black_cloud_1').offsetHeight;
+var cloud1_width = document.getElementById('black_cloud_1').offsetWidth;
+var cloud1_x = cloud1_left + cloud1_width;
+var cloud1_y = cloud1_top + cloud1_height;
+
+var cloud2_left = document.getElementById('black_cloud_2').offsetLeft;
+var cloud2_top = document.getElementById('black_cloud_2').offsetTop;
+var cloud2_height = document.getElementById('black_cloud_2').offsetHeight;
+var cloud2_width = document.getElementById('black_cloud_2').offsetWidth;
+var cloud2_x = cloud2_left + cloud2_width;
+var cloud2_y = cloud2_top + cloud1_height;
+
+var crow_left = document.getElementById('crow').offsetLeft;
+var crow_top = document.getElementById('crow').offsetTop;
+var crow_height = document.getElementById('crow').offsetHeight;
+var crow_width = document.getElementById('crow').offsetWidth;
+var crow_x = crow_left + crow_width;
+var crow_y = crow_top + crow_height;
+
+if( (!(plane_y < cloud1_top || plane_top > cloud1_y || plane_x < cloud1_left || plane_left > cloud1_x))
+|| (!(plane_y < cloud2_top || plane_top > cloud2_y || plane_x < cloud2_left || plane_left > cloud2_x))
+|| (!(plane_y < crow_top || plane_top > crow_y || plane_x < crow_left || plane_left > crow_x)))
+{
+ changePicture();
+}
+
+}
+
+function changePicture(){
+var plane = document.getElementById('plane');
+var boom = document.getElementById('boom');
+boom.style.top = plane.offsetTop + "px";
+if(boom.style.display=="none")
+{
+	boom.style.display="block";
+	plane.style.display="none";
+}
+else{
+	boom.style.display="none";
+	plane.style.display="block";
+}
+}
+window.onload = wrapperFunction;
+
+</script>
+
+</body>
